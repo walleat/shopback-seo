@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://johnresig.com/blog/pure-javascript-html-parser/ -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="./test_files/style.css" media="screen" rel="stylesheet" type="text/css">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://feeds.feedburner.com/JohnResig">
+    <link rel="alternate" type="application/rss+xml" title="John Resig » Pure JavaScript HTML Parser Comments Feed" href="https://johnresig.com/blog/pure-javascript-html-parser/feed/">
+<link rel="stylesheet" id="emailoctopus-widget-styles-css" href="./test_files/widget.css" type="text/css" media="all">
+<script async="" src="./test_files/analytics.js"></script><script type="text/javascript" src="./test_files/jquery.js"></script>
+<script type="text/javascript" src="./test_files/jquery-migrate.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var gadwpUAEventsData = {"options":{"event_tracking":"1","event_downloads":"zip|mp3*|mpe*g|pdf|docx*|pptx*|xlsx*|rar*","event_bouncerate":0,"aff_tracking":1,"event_affiliates":"\/out\/|amzn.to","hash_tracking":0,"root_domain":"johnresig.com","event_timeout":100,"event_precision":0,"event_formsubmit":0,"ga_pagescrolldepth_tracking":0,"ga_with_gtag":0}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./test_files/tracking-analytics-events.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var emailoctopus_message = {"success":"Thanks for subscribing!","missing_email_address_error":"Your email address is required.","invalid_email_address_error":"Your email address looks incorrect, please try again.","bot_submission_error":"This doesn't look like a human submission.","invalid_parameters_error":"This form has missing or invalid fields.","consent_required_error":"Please check the checkbox to indicate your consent.","unknown_error":"Sorry, an unknown error has occurred. Please try again later."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./test_files/widget.js"></script>
+<link rel="https://api.w.org/" href="https://johnresig.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://johnresig.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://johnresig.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Thoughts on querySelectorAll" href="https://johnresig.com/blog/thoughts-on-queryselectorall/">
+<link rel="next" title="Qualified Selectors in jQuery" href="https://johnresig.com/blog/qualified-selectors-in-jquery/">
+<meta name="generator" content="WordPress 4.9.8">
+<link rel="canonical" href="https://johnresig.com/blog/pure-javascript-html-parser/">
+<link rel="shortlink" href="https://johnresig.com/?p=5587">
+<link rel="alternate" type="application/json+oembed" href="https://johnresig.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fjohnresig.com%2Fblog%2Fpure-javascript-html-parser%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://johnresig.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fjohnresig.com%2Fblog%2Fpure-javascript-html-parser%2F&amp;format=xml">
+<link rel="stylesheet" type="text/css" href="./test_files/shCore.css"><link rel="stylesheet" type="text/css" href="./test_files/shThemeDefault.css"><style type="text/css" id="syntaxhighlighteranchor"></style>
+<link rel="icon" href="https://johnresig.com/wp-content/uploads/2017/04/cropped-jeresig-2016.1024-32x32.jpg" sizes="32x32">
+<link rel="icon" href="https://johnresig.com/wp-content/uploads/2017/04/cropped-jeresig-2016.1024-192x192.jpg" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://johnresig.com/wp-content/uploads/2017/04/cropped-jeresig-2016.1024-180x180.jpg">
+<meta name="msapplication-TileImage" content="https://johnresig.com/wp-content/uploads/2017/04/cropped-jeresig-2016.1024-270x270.jpg">
+
+<!-- BEGIN ExactMetrics v5.3.5 Universal Analytics - https://exactmetrics.com/ -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-50335-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- END ExactMetrics Universal Analytics -->
+<script src="chrome-extension://jhffgcfmcckgmioipfnmbannkpncfipo/util.js"></script><script src="chrome-extension://jhffgcfmcckgmioipfnmbannkpncfipo/pagejs.js"></script><script id="_carbonads_projs" type="text/javascript" src="./test_files/CKYIK5QY.json"></script></head>
+<body class="post-template-default single single-post postid-5587 single-format-standard wp-custom-logo">
+<div id="wrapper">
+    <div id="head" class="other">
+        <div class="wrap">
+            <div class="nav"><ul id="menu-top-nav" class="menu"><li id="menu-item-6341" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-6341"><a href="https://johnresig.com/">Home</a></li>
+<li id="menu-item-6343" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-6343"><a href="https://johnresig.com/category/blog/">Blog</a></li>
+<li id="menu-item-6342" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6342"><a href="https://johnresig.com/projects/">Projects</a></li>
+<li id="menu-item-6387" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6387"><a href="https://johnresig.com/speaking/">Speaking</a></li>
+<li id="menu-item-6283" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6283"><a href="https://johnresig.com/research/">Research</a></li>
+<li id="menu-item-6284" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6284"><a href="https://johnresig.com/about/">About</a></li>
+</ul></div>            <div class="side">
+                <a href="https://johnresig.com/about/" class="logo"></a><a href="https://johnresig.com/" class="custom-logo-link" rel="home" itemprop="url"><img width="48" height="48" src="./test_files/cropped-cropped-jeresig-2016.1024.jpg" class="custom-logo" alt="John Resig" itemprop="logo">><img width="48" height="48" src="./test_files/cropped-cropped-jeresig-2016.1024.jpg" class="custom-logo"  itemprop="logo"></a>                <div class="text">
+                    <span class="name">John Resig</span><br>
+                    <ul id="menu-contact" class="contact-menu"><li id="menu-item-6349" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6349"><a href="https://johnresig.com/subscribe/">Subscribe</a></li>
+<li id="menu-item-6350" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6350"><a href="https://johnresig.com/about/">Contact</a></li>
+</ul>                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrap">
+        <div id="body">
+            <div class="wrap">
+
+
+	
+	
+	<h2>Pure JavaScript HTML Parser</h2>
+    <h1>123</h1>
+    <h1>234</h1>
+	<div class="postentry">
+		<p>Recently I was having a little bit of fun and decided to go about writing a pure JavaScript HTML parser. Some might remember my one project, <a href="https://johnresig.com/blog/bringing-the-browser-to-the-server/">env.js</a>, which ported the  native browser JavaScript features to the server-side (powered by <a href="http://www.mozilla.org/rhino/">Rhino</a>). One thing that was lacking from that project was an HTML parser (it parsed strict XML only).</p>
+<p>I’ve been toying with the ability to port env.js to other platforms (Spidermonkey derivatives and the ECMAScript 4 Reference Implementation) and if I were to do so I would need an HTML parser. Because of this fact it became easiest to just write an HTML parser in pure JavaScript.</p>
+<p>I did some digging to see what people had previously built, but the landscape was pretty bleak. The only one that I could find was one made by <a href="http://erik.eae.net/">Erik Arvidsson</a> – a simple <a href="http://erik.eae.net/simplehtmlparser/simplehtmlparser.js">SAX-style HTML parser</a>. Considering that this contained only the most basic parsing – and none of the actual, complicated, HTML logic there was still a lot of work left to be done.</p>
+<p>(I also contemplated porting the <a href="http://code.google.com/p/html5lib/">HTML 5 parser</a>, wholesale, but that seemed like a herculean effort.)</p>
+<p>However, the result is one that I’m quite pleased with. It won’t match the compliance of html5lib, nor the speed of a pure XML parser, but it’s able to get the job done with little fuss – while still being highly portable.</p>
+<p><b>htmlparser.js:</b></p>
+<ul>
+<li><a href="https://johnresig.com/files/htmlparser.js">View htmlparser.js</a></li>
+<li><a href="https://johnresig.com/apps/htmlparser/">Demo</a></li>
+</ul>
+<p><b>4 Libraries in One!</b></p>
+<p>There were four pieces of functionality that I wanted to implement with this library:</p>
+<p><b>A <a href="http://en.wikipedia.org/wiki/Simple_API_for_XML">SAX-style</a> API</b></p>
+<p>Handles tag, text, and comments with callbacks. For example, let’s say you wanted to implement a simple HTML to XML serialization scheme – you could do so using the following:</p>
+<div><div id="highlighter_725962" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript keyword">var</code> <code class="jscript plain">results = </code><code class="jscript string">""</code><code class="jscript plain">;</code></div><div class="line number2 index1 alt1">&nbsp;</div><div class="line number3 index2 alt2"><code class="jscript plain">HTMLParser(</code><code class="jscript string">"&lt;p id=test&gt;hello &lt;i&gt;world"</code><code class="jscript plain">, {</code></div><div class="line number4 index3 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">start: </code><code class="jscript keyword">function</code><code class="jscript plain">( tag, attrs, unary ) {</code></div><div class="line number5 index4 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += </code><code class="jscript string">"&lt;"</code> <code class="jscript plain">+ tag;</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript keyword">for</code> <code class="jscript plain">( </code><code class="jscript keyword">var</code> <code class="jscript plain">i = 0; i &lt; attrs.length; i++ )</code></div><div class="line number8 index7 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += </code><code class="jscript string">" "</code> <code class="jscript plain">+ attrs&amp;</code><code class="jscript preprocessor">#91;i&amp;#93;.name + '="' + attrs&amp;#91;i&amp;#93;.escaped + '"';</code></div><div class="line number9 index8 alt2">&nbsp;</div><div class="line number10 index9 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += (unary ? </code><code class="jscript string">"/"</code> <code class="jscript plain">: </code><code class="jscript string">""</code><code class="jscript plain">) + </code><code class="jscript string">"&gt;"</code><code class="jscript plain">;</code></div><div class="line number11 index10 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">},</code></div><div class="line number12 index11 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">end: </code><code class="jscript keyword">function</code><code class="jscript plain">( tag ) {</code></div><div class="line number13 index12 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += </code><code class="jscript string">"&lt;/"</code> <code class="jscript plain">+ tag + </code><code class="jscript string">"&gt;"</code><code class="jscript plain">;</code></div><div class="line number14 index13 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">},</code></div><div class="line number15 index14 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">chars: </code><code class="jscript keyword">function</code><code class="jscript plain">( text ) {</code></div><div class="line number16 index15 alt1"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += text;</code></div><div class="line number17 index16 alt2"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">},</code></div><div class="line number18 index17 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">comment: </code><code class="jscript keyword">function</code><code class="jscript plain">( text ) {</code></div><div class="line number19 index18 alt2"><code class="jscript spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="jscript plain">results += </code><code class="jscript string">"&lt;!--"</code> <code class="jscript plain">+ text + </code><code class="jscript string">"--&gt;"</code><code class="jscript plain">;</code></div><div class="line number20 index19 alt1"><code class="jscript spaces">&nbsp;&nbsp;</code><code class="jscript plain">}</code></div><div class="line number21 index20 alt2"><code class="jscript plain">});</code></div><div class="line number22 index21 alt1">&nbsp;</div><div class="line number23 index22 alt2"><code class="jscript plain">results == '&lt;p id=</code><code class="jscript string">"test"</code><code class="jscript plain">&gt;hello &lt;i&gt;world&lt;/i&gt;&lt;/p&gt;"</code></div></div></td></tr></tbody></table></div></div>
+<p><b>XML Serializer</b></p>
+<p>Now, there’s no need to worry about implementing the above, since it’s included directly in the library, as well. Just feed in HTML and it spits back an XML string.</p>
+<div><div id="highlighter_338725" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript keyword">var</code> <code class="jscript plain">results = HTMLtoXML(</code><code class="jscript string">"&lt;p&gt;Data: &lt;input disabled&gt;"</code><code class="jscript plain">)</code></div><div class="line number2 index1 alt1"><code class="jscript plain">results == </code><code class="jscript string">'&lt;p&gt;Data: &lt;input disabled="disabled"/&gt;&lt;/p&gt;'</code></div></div></td></tr></tbody></table></div></div>
+<p><b>DOM Builder</b></p>
+<p>If you’re using the HTML parser to inject into an existing DOM document (or within an existing DOM element) then htmlparser.js provides a simple method for handling that:</p>
+<div><div id="highlighter_889512" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript comments">// The following is appended into the document body</code></div><div class="line number2 index1 alt1"><code class="jscript plain">HTMLtoDOM(</code><code class="jscript string">"&lt;p&gt;Hello &lt;b&gt;World"</code><code class="jscript plain">, document)</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1"><code class="jscript comments">// The follow is appended into the specified element</code></div><div class="line number5 index4 alt2"><code class="jscript plain">HTMLtoDOM(</code><code class="jscript string">"&lt;p&gt;Hello &lt;b&gt;World"</code><code class="jscript plain">, document.getElementById(</code><code class="jscript string">"test"</code><code class="jscript plain">))</code></div></div></td></tr></tbody></table></div></div>
+<p><b>DOM Document Creator</b></p>
+<p>This is a more-advanced version of the DOM builder – it includes logic for handling the overall structure of a web page, returning a new DOM document.</p>
+<p>A couple points are enforced by this method:</p>
+<ul>
+<li>There will always be a html, head, body, and title element.</li>
+<li>There will only be one html, head, body, and title element (if the user specifies more, then will be moved to the appropriate locations and merged).</li>
+<li>link and base elements are forced into the head.</li>
+</ul>
+<p>You would use the method like so:</p>
+<div><div id="highlighter_761790" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript keyword">var</code> <code class="jscript plain">dom = HTMLtoDOM(</code><code class="jscript string">"&lt;p&gt;Data: &lt;input disabled&gt;"</code><code class="jscript plain">);</code></div><div class="line number2 index1 alt1"><code class="jscript plain">dom.getElementsByTagName(</code><code class="jscript string">"body"</code><code class="jscript plain">).length == 1</code></div><div class="line number3 index2 alt2"><code class="jscript plain">dom.getElementsByTagName(</code><code class="jscript string">"p"</code><code class="jscript plain">).length == 1</code></div></div></td></tr></tbody></table></div></div>
+<hr>
+<p>While this library doesn’t cover the full gamut of possible weirdness that HTML provides, it does handle a lot of the most obvious stuff. All of the following are accounted for:</p>
+<ul>
+<li>Unclosed Tags:
+<div><div id="highlighter_991832" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">HTMLtoXML(</code><code class="jscript string">"&lt;p&gt;&lt;b&gt;Hello"</code><code class="jscript plain">) == </code><code class="jscript string">'&lt;p&gt;&lt;b&gt;Hello&lt;/b&gt;&lt;/p&gt;'</code></div></div></td></tr></tbody></table></div></div>
+</li>
+<li>Empty Elements:
+<div><div id="highlighter_763342" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">HTMLtoXML(</code><code class="jscript string">"&lt;img src=test.jpg&gt;"</code><code class="jscript plain">) == </code><code class="jscript string">'&lt;img src="test.jpg"/&gt;'</code></div></div></td></tr></tbody></table></div></div>
+</li>
+<li>Block vs. Inline Elements:
+<div><div id="highlighter_852987" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">HTMLtoXML(</code><code class="jscript string">"&lt;b&gt;Hello &lt;p&gt;John"</code><code class="jscript plain">) == </code><code class="jscript string">'&lt;b&gt;Hello &lt;/b&gt;&lt;p&gt;John&lt;/p&gt;'</code></div></div></td></tr></tbody></table></div></div>
+</li>
+<li>Self-closing Elements:
+<div><div id="highlighter_978838" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">HTMLtoXML(</code><code class="jscript string">"&lt;p&gt;Hello&lt;p&gt;World"</code><code class="jscript plain">) == </code><code class="jscript string">'&lt;p&gt;Hello&lt;/p&gt;&lt;p&gt;World&lt;/p&gt;'</code></div></div></td></tr></tbody></table></div></div>
+</li>
+<li>Attributes Without Values:
+<div><div id="highlighter_750702" class="syntaxhighlighter nogutter  jscript"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="jscript plain">HTMLtoXML(</code><code class="jscript string">"&lt;input disabled&gt;"</code><code class="jscript plain">) == </code><code class="jscript string">'&lt;input disabled="disabled"/&gt;'</code></div></div></td></tr></tbody></table></div></div>
+</li>
+</ul>
+<p><b>Note:</b> It does <b>not</b> take into account where in the document an element should exist. Right now you can put block elements in a head or th inside a p and it’ll happily accept them. It’s not entirely clear how the logic should work for those, but it’s something that I’m open to exploring.</p>
+<p>You can test a lot of this out in the <a href="https://johnresig.com/apps/htmlparser/">live demo</a>.</p>
+<p>While I doubt this will cover all weird HTML cases – it should handle most of the obvious ones – at least making HTML parsing in JavaScript feasible.</p>
+	</div>
+
+	<p>
+		<small>
+			<strong>Posted:</strong> May 5th, 2008					</small>
+	</p>
+	<hr>
+    <strong><a href="https://johnresig.com/subscribe/">Subscribe for email updates</a></strong>
+	
+
+	<h4 id="comments">
+	35 Comments		<a href="https://johnresig.com/blog/pure-javascript-html-parser/#postcomment" title="Jump to the comments form" id="showcomment" onclick="document.getElementById(&#39;commentlist&#39;).style.display=&#39;block&#39;;">(Show Comments)</a>
+		</h4>
+
+	<ol id="commentlist" style="display:none;">
+
+	
+		<li class="alt " id="comment-305097">
+		
+		<h3 class="commenttitle"><b>Daniel Luz</b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305097" title="Permanent link to this comment">9:14 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Great stuff! I’ll sure try it later today. But I guess a closing slash is missing in the XML part of this line:</p>
+<p><code>HTMLtoXML("&lt;img src=test.jpg&gt;") == '&lt;img src="test.jpg"&gt;'</code></p>
+<p>As it is now, that’s more like an example of unquoted attributes :)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" author" id="comment-305099">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305099" title="Permanent link to this comment">9:15 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Daniel: My mistake – I was just writing the examples by hand – you can see that it works properly in the demo.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305100">
+		
+		<h3 class="commenttitle"><b><a href="http://arapehlivanian.com/" rel="external nofollow" class="url">Ara Pehlivanian</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305100" title="Permanent link to this comment">9:16 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Great work! This would have come in handy as a comment validator back when I was running my site in application/xhtml+xml, or even when I was overriding document.write and manually parsing 3rd party scripts.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305113">
+		
+		<h3 class="commenttitle"><b><a href="http://travis.servebeer.com/blog.net/" rel="external nofollow" class="url">Travis</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305113" title="Permanent link to this comment">9:36 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>hmm:<br>
+hello world&lt;br/&gt;foo&lt;br /&gt;bar</p>
+<p>changes into:<br>
+hello world&lt;br/&gt;foo&lt;br /=”/”/&gt;bar</p>
+<p>(one of our co-ops noticed it)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305114">
+		
+		<h3 class="commenttitle"><b><a href="http://hsivonen.iki.fi/" rel="external nofollow" class="url">Henri Sivonen</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305114" title="Permanent link to this comment">9:37 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Since porting the html5lib Python or Ruby parser would take manual effort, I think it would be interesting to see if Google Web Toolkit can compile the <a href="http://about.validator.nu/htmlparser/" rel="nofollow">Validator.nu HTML parser</a> from Java to JavaScript. If not, porting the trunk of the Validator.nu HTML parser line-by-line should be a better and more mechanic match to languages that look roughly Java-ish or C-ish. (The trunk is being heavily refactored to allow interesting things including straight-forward or even automated porting to C or C++ or perhaps JavaScript with and Gecko-style parser suspendability.)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305116">
+		
+		<h3 class="commenttitle"><b>Philip Taylor</b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305116" title="Permanent link to this comment">9:39 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Input like <code>&lt;&gt;</code> seems to get stuck in an infinite loop.</p>
+<p>The HTML 5 parsing algorithm isn’t really <em>that</em> hard to implement – I’ve got a rough JS version <a href="http://philip.html5.org/tools/parser/?%3C!DOCTYPE%20HTML%3E%0A%3Cb%3Efoo%3Ci%3Ebar%3C%2Fb%3Ebaz%3C%2Fi%3E" rel="nofollow">here</a>. It’s pretty incomplete (it doesn’t handle things like &lt;script&gt; content, error handling in tables is probably dodgy, it hasn’t followed recent updates to the specification, etc), but it seems to work as a proof-of-concept, and it could probably become reasonably correct with another few days of work. And it’s only, uh, four thousand lines of code. Maybe there’s still room for smaller, less correct parsers…</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305117">
+		
+		<h3 class="commenttitle"><b><a href="http://sunfox.org/" rel="external nofollow" class="url">Sunny</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305117" title="Permanent link to this comment">9:39 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Awesome :) Two hiccups when trying it out, though : <code>&lt;img alt="" src="test.jpg" /&gt;</code> =&gt; <code>&lt;img alt="alt" src="test.jpg" /="/"/&gt;</code></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" author" id="comment-305120">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305120" title="Permanent link to this comment">9:49 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Travis and Sunny: Fixed! In my defense, that’s not valid HTML ;-)</p>
+<p>@Sunny: Also fixed the alt=”” issue.</p>
+<p>@Philip: Fixed! Didn’t have any sort of exception handling – was an easy addition. I assume that this parser work is quite new – definitely wasn’t able to find anything back when I was building this in January. Glad to see that some progress is being made! But yeah, 4000 lines is a little bit on the “heavy” side.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305123">
+		
+		<h3 class="commenttitle"><b><a href="http://mislav.caboo.se/" rel="external nofollow" class="url">Mislav</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305123" title="Permanent link to this comment">9:53 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Travis, Sunny: that’s in fact invalid HTML, but parsers in web browsers seem to ignore the self-closing bit (or maybe they parse it as some weird attribute?), so web authors started happily using them while living in a illusion that they were writing XHTML.</p>
+<p>But, I agree that Resig’s parser should handle this nicer than this. Maybe just ignore it.</p>
+<p>@Resig: great stuff.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305140">
+		
+		<h3 class="commenttitle"><b><a href="http://gsnedders.com/" rel="external nofollow" class="url">Geoffrey Sneddon</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305140" title="Permanent link to this comment">10:27 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>A bug I found very quickly: <code>HTMLtoXML("&amp;#xFFFF;") == '&amp;#xFFFF;'</code></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305145">
+		
+		<h3 class="commenttitle"><b>Kirk Cerny</b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305145" title="Permanent link to this comment">10:29 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Right now you can put block elements in a head or th inside a p and it’ll happily accept them.</p>
+<p>Sounds like you need to make a W3C Html Validator in JavaScript.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305148">
+		
+		<h3 class="commenttitle"><b>Philip Taylor</b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305148" title="Permanent link to this comment">10:31 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>John: My tokeniser implementation in JS (and C++ and Perl and OCaml…) was done and <a href="http://lists.w3.org/Archives/Public/public-html/2007Jul/1103.html" rel="nofollow">described</a> quite a while ago, but I didn’t work on the tree construction part until roughly February, so it is fairly recent. It’s crazy, but fun :-)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt author" id="comment-305150">
+		
+		<h3 class="commenttitle"><b><a href="http://ejohn.org/" rel="external nofollow" class="url">John Resig</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305150" title="Permanent link to this comment">10:37 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@Geoffrey: I’m not sure I see your point – what would you expect the output to be? That looks valid to me.</p>
+<p>@Kirk: Heh, well, not a full validator – but enough to force it into the right shape.</p>
+<p>@Philip: Yeah, I can only imagine. Keep up the good work!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305155">
+		
+		<h3 class="commenttitle"><b><a href="http://www.bruechner.de/" rel="external nofollow" class="url">Simon BrÃ¼chner</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305155" title="Permanent link to this comment">10:45 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Just read an article about HTML vs. XHTML: <a href="http://www.debuggable.com/posts/xhtml-is-a-joke:4819bf98-4978-4027-896e-2ea44834cda3" rel="nofollow">http://www.debuggable.com/posts/xhtml-is-a-joke:4819bf98-4978-4027-896e-2ea44834cda3</a> which says that XHTML isnt that required…</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305158">
+		
+		<h3 class="commenttitle"><b><a href="http://www.bruechner.de/" rel="external nofollow" class="url">Simon BrÃ¼chner</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305158" title="Permanent link to this comment">10:46 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>… but neverthanless cool JS John!!!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305165">
+		
+		<h3 class="commenttitle"><b><a href="http://travis.servebeer.com/blog.net/" rel="external nofollow" class="url">Travis</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305165" title="Permanent link to this comment">11:20 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Aw c’mon, I was expecting a full JS implementation of Tidy! ;-) Nice work.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305212">
+		
+		<h3 class="commenttitle"><b><a href="http://irae.pro.br/en/" rel="external nofollow" class="url">IraÃª</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305212" title="Permanent link to this comment">12:47 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Very cool implementation!</p>
+<p>I’ll see how it plays with AdobeAIR and Jaxer. I’m sure i will be fun!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305385">
+		
+		<h3 class="commenttitle"><b><a href="http://gsnedders.com/" rel="external nofollow" class="url">Geoffrey Sneddon</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305385" title="Permanent link to this comment">6:02 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>@John: Numeric character entity references in XML 1.0/1.1 must match a character in the Char production: U+FFFF (a non-character) does not match it, and therefore an entity representing it is non well-formed XML. The entity should be treated as an invalid Unicode character, being replaced with U+FFFD (ï¿½) or ?, or totally removed.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305583">
+		
+		<h3 class="commenttitle"><b><a href="http://dmitry.baranovskiy.com/" rel="external nofollow" class="url">Dmitry Baranovskiy</a></b>
+	
+		<small><small>
+			(May 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305583" title="Permanent link to this comment">11:49 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Great stuff! This script could be a saver for WYSIWYG editors. However I found small issue: It recognise  as a block level element, but not . </p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305690">
+		
+		<h3 class="commenttitle"><b>Mike</b>
+	
+		<small><small>
+			(May 6, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305690" title="Permanent link to this comment">3:49 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>How about converting tags to lowercase?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305802">
+		
+		<h3 class="commenttitle"><b><a href="http://www.rodrigoasensio.com/" rel="external nofollow" class="url">Rodrigo Asensio</a></b>
+	
+		<small><small>
+			(May 6, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305802" title="Permanent link to this comment">9:29 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Nice work, I will use it to generate html on the fly from js.<br>
+thanks!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-305840">
+		
+		<h3 class="commenttitle"><b>d3x</b>
+	
+		<small><small>
+			(May 6, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305840" title="Permanent link to this comment">11:00 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>How about a valid innerHTML method?</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-305980">
+		
+		<h3 class="commenttitle"><b><a href="http://melez.com/mykzilla/" rel="external nofollow" class="url">Myk Melez</a></b>
+	
+		<small><small>
+			(May 6, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-305980" title="Permanent link to this comment">2:01 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Very cool.  Is there a way to make it ignore script tags?  I’m thinking it could be useful for parsing untrusted HTML snippets.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-306313">
+		
+		<h3 class="commenttitle"><b><a href="http://zanstra.com/base/blog" rel="external nofollow" class="url">Doeke Zanstra</a></b>
+	
+		<small><small>
+			(May 7, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-306313" title="Permanent link to this comment">2:41 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>One note about your env.js:</p>
+<p>You know javascript knows nothing about threads. Maybe you could simulate this behaviour, by using java’s synchronized? Just an idea.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-307137">
+		
+		<h3 class="commenttitle"><b><a href="http://onlineshop.de/" rel="external nofollow" class="url">^love *encounter ~flow</a></b>
+	
+		<small><small>
+			(May 8, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-307137" title="Permanent link to this comment">6:39 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>“this library doesn’t cover the full gamut of possible weirdness that HTML provides, it does handle a lot of the most obvious stuff” — good! did you have a look at <a href="http://www.crummy.com/software/BeautifulSoup/" rel="nofollow">http://www.crummy.com/software/BeautifulSoup/</a> ? it does a wonderful job at healing broken X/HT/MLish stuff and never balks. i use it to parse pointy brackets in <a href="http://code.google.com/p/shuttlepod/" rel="nofollow">http://code.google.com/p/shuttlepod/</a>, and it works like a charm. the good thing is you most of the time get a representation that matches both your expectation, the intention of the author, and the interpretation of the browser. with classical XML parsers, what you get is more often than not an error message, and that is most likely not what you want. i never grokked exactly how L. Richardson set up the rules for healing HTML, but i can say it does work for me. plus, B.S. leaves any idiosyncrytic non-standard stuff as-is in the result, so it makes a very good foundation for the templating engine iâ€™m writing ` tag with a “ and a “ added&gt;. </p>
+<p>oh, and default attributes Ã&nbsp; la “ =&gt; “. very good thing that. iâ€™ve always thought of attributes that are mentioned but not filled as representing `true`, plain and simple. HTML can be very declarative, almost like a configuration file, and i think a configuration language should allow the plain mention of names: haveMoney, willTravel, both true. no need to add a nonce value. check it out: `checked` is already more expressive than `checked=’checked’`. does HTML 5 allow that? </p>
+<p>~flow</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-307142">
+		
+		<h3 class="commenttitle"><b><a href="http://onlineshop.de/" rel="external nofollow" class="url">^love *encounter ~flow</a></b>
+	
+		<small><small>
+			(May 8, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-307142" title="Permanent link to this comment">6:44 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>ok that got swallowed. again, with pointy brackets written as parentheses: “… foundation for the templating engine iâ€™m writing (imagine having a `(video/)` tag with a `(switch/)` and a `(slider default=’30%’/)` added) …”. so that is about server-side custom tags, which BeautifulSoup parses beautifully. </p>
+<p>second ommission: “…oh, and default attributes Ã&nbsp; la `(x a)` =&gt; `(x a=’a’)`. very good thing that.”  </p>
+<p>sorry for the dub-up.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-307215">
+		
+		<h3 class="commenttitle"><b><a href="http://stephan.reposita.org/" rel="external nofollow" class="url">Stephan Schmidt</a></b>
+	
+		<small><small>
+			(May 8, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-307215" title="Permanent link to this comment">8:44 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Any plans to support namespaces?</p>
+<p>Thanks<br>
+-stephan</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-308848">
+		
+		<h3 class="commenttitle"><b><a href="http://www.fu2k.org/alex/css" rel="external nofollow" class="url">Alex Robinson</a></b>
+	
+		<small><small>
+			(May 16, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-308848" title="Permanent link to this comment">10:54 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Ran into the following parse errors, when attempting to feed html in the wild through the parser…</p>
+<p>HTMLtoXML(”)<br>
+   -&gt; “htmlparser.js”, line 121: exception from uncaught JavaScript<br>
+      throw: Parse Error:…</p>
+<p>HTMLtoXML(”)<br>
+   -&gt; “htmlparser.js”, line 121: exception from uncaught JavaScript<br>
+      throw: Parse Error:…</p>
+<p>HTMLtoXML(‘\n/*  */\n’)<br>
+   -&gt; “htmlparser.js”, line 121: exception from uncaught JavaScript<br>
+      throw: Parse Error:…</p>
+<p>HTMLtoXML(‘\n/* */\n’)<br>
+   -&gt;<br>
+      /* */<br>
+(NB. the comment pops out of the style tag!)</p>
+<p>All that aside, brilliant work John.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-308850">
+		
+		<h3 class="commenttitle"><b><a href="http://www.fu2k.org/alex/css" rel="external nofollow" class="url">Alex Robinson</a></b>
+	
+		<small><small>
+			(May 16, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-308850" title="Permanent link to this comment">11:02 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>(Gah! I totally misread the note. I thought it meant that code would be wrapped and angle brackets converted automatically. Try again)</p>
+<p><code>HTMLtoXML('&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"&gt;&lt;/html&gt;')<br>
+-&gt; "htmlparser.js", line 121: exception from uncaught JavaScript throw: Parse Error:…</code></p><code>
+<p>HTMLtoXML('&lt;meta http-equiv="content-type" content="text/html; charset=utf-8"&gt;')<br>
+-&gt; "htmlparser.js", line 121: exception from uncaught JavaScript throw: Parse Error:…</p>
+<p>HTMLtoXML('&lt;style type="text/css"&gt;\n/* &lt;![CDATA[ */\n/* ]]&gt; */\n&lt;/style&gt;')<br>
+-&gt; "htmlparser.js", line 121: exception from uncaught JavaScript throw: Parse Error:…</p>
+</code><p><code>HTMLtoXML('&lt;style type="text/css"&gt;\n/* */\n&lt;/style&gt;')<br>
+-&gt; &lt;style type="text/css"&gt;&lt;/style&gt;<br>
+/* */</code><br>
+(NB. the comment pops out of the style tag!)</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-310521">
+		
+		<h3 class="commenttitle"><b>STEVO</b>
+	
+		<small><small>
+			(May 22, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-310521" title="Permanent link to this comment">11:02 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p><code><br>
+&lt;script&gt;<br>
+code<br>
+&lt;/script&gt;<br>
+</code></p>
+<p>==&amp;gt</p>
+<p>&lt;script&gt;&lt;/script&gt;<br>
+code</p>
+<p>any chance of a fix for this?</p>
+<p>ta</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-312138">
+		
+		<h3 class="commenttitle"><b>Ryan</b>
+	
+		<small><small>
+			(May 26, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-312138" title="Permanent link to this comment">11:43 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Great work!  Kinda like Sarissa, but in full JS with full control.</p>
+<p>Some problems with Sarissa that also is a problem with htmlparser.js:<br>
+ some text with this inside<br>
+Also I has some problems with &amp; in Sarissa, but it seems to work ok with your code.</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-312140">
+		
+		<h3 class="commenttitle"><b>Ryan</b>
+	
+		<small><small>
+			(May 26, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-312140" title="Permanent link to this comment">11:46 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Ugg:<br>
+&lt;div&gt; some text with this &lt; inside &lt;/div&gt;</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-315102">
+		
+		<h3 class="commenttitle"><b><a href="http://weston.ruter.net/" rel="external nofollow" class="url">Weston Ruter</a></b>
+	
+		<small><small>
+			(June 4, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-315102" title="Permanent link to this comment">1:47 pm</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Hey John, I’ve incorporated this HTML Parser into an implementation of <code>document.write()</code> for XHTML, which I know you’ve also worked on: <a href="http://weston.ruter.net/projects/xhtml-document-write/" rel="nofollow">http://weston.ruter.net/projects/xhtml-document-write/</a></p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class=" " id="comment-315313">
+		
+		<h3 class="commenttitle"><b>Hansor</b>
+	
+		<small><small>
+			(June 5, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-315313" title="Permanent link to this comment">7:12 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>XMLtoDOM doesn’t work 4 me, though.</p>
+<p><code>HTMLtoDOM("Data dddtestddd", document);</code></p>
+<p>Gets  me:<br>
+String contains an invalid character” code: “5<br>
+on line 273 </p>
+<p>with FF2.0 on Linux.</p>
+<p>Nice project, though!</p>
+</div>
+		
+		</li>
+
+		
+	
+		<li class="alt " id="comment-318456">
+		
+		<h3 class="commenttitle"><b>Tobi Buschi</b>
+	
+		<small><small>
+			(June 22, 2008 
+			at <a href="https://johnresig.com/blog/pure-javascript-html-parser/#comment-318456" title="Permanent link to this comment">9:02 am</a>)
+					</small></small>
+		</h3>
+		
+		<div class="comment-text"><p>Great library!<br>
+Is there a easy way to indent the xml-code?</p>
+</div>
+		
+		</li>
+
+		
+	
+	</ol>
+
+
+
+<br><hr>
+<p><b>Comments are closed.</b><br>
+Comments are automatically turned off two weeks after the original post. If you have a question
+concerning the content of this post, please feel free to <a href="https://johnresig.com/about/">contact me</a>.</p>
+<hr>
+
+
+	
+		
+
+            </div>
+        </div>
+
+        <div id="side">
+    <div id="projects">
+        <div class="box">			<div class="textwidget"><p><a href="https://amzn.to/2oiS4em"><img class="icon" src="./test_files/jsninja.74.jpg" alt="Secrets of the JavaScript Ninja" width="74" height="94"></a></p>
+<div class="desc" style="height: 100px; margin-top: -12px;">
+<h3><a href="https://amzn.to/2oiS4em">Secrets of the JS Ninja</a></h3>
+<p>Secret techniques of top JavaScript programmers. Published by Manning.</p>
+</div>
+</div>
+		</div><div class="box">			<div class="textwidget"><p><script async="" type="text/javascript" src="./test_files/carbon.js" id="_carbonads_js"></script><div id="carbonads"><span><span class="carbon-wrap"><a href="https://srv.carbonads.net/ads/click/x/GTND42QWCVAI6237F6B4YKQMCE7DE2QMCWBDTZ3JCWBD653WCVAIK23KC6BIVKJ7CKBDEK3EHJNCLSIZ?segment=placement:ejohnorg;" class="carbon-img" target="_blank" rel="noopener"><img src="./test_files/1538007875-Monday-laptop_purple_graph.png" alt="" border="0" height="100" width="130" style="max-width: 130px;"></a><a href="https://srv.carbonads.net/ads/click/x/GTND42QWCVAI6237F6B4YKQMCE7DE2QMCWBDTZ3JCWBD653WCVAIK23KC6BIVKJ7CKBDEK3EHJNCLSIZ?segment=placement:ejohnorg;" class="carbon-text" target="_blank" rel="noopener">Project tracking, teamwork &amp; client reporting like you've never seen before.</a></span><a href="http://carbonads.net/?utm_source=ejohnorg&amp;utm_medium=ad_via_link&amp;utm_campaign=in_unit&amp;utm_term=carbon" class="carbon-poweredby" target="_blank" rel="noopener">ads via Carbon</a><img src="./test_files/B20652854.212994676" border="0" height="1" width="1" style="display: none;"></span></div></p>
+</div>
+		</div><div class="box">			<div class="textwidget"><h3 style="line-height: 69px;"><a href="https://johnresig.com/subscribe/">Subscribe for email updates</a></h3></div>
+		</div><div class="box">			<div class="textwidget"><a href="https://twitter.com/jeresig"><img src="./test_files/twitter-74.png" class="icon" alt="John Resig Twitter Updates" width="74" height="74"></a>
+<div class="desc">
+        <h3><a href="https://twitter.com/jeresig">@jeresig</a></h3>
+        <p>Infrequent, short, updates and links.</p>
+</div></div>
+		</div>    </div>
+</div>    </div>
+</div>
+<script type="text/javascript" src="./test_files/shCore.js"></script>
+<script type="text/javascript" src="./test_files/shBrushJScript.js"></script>
+<script type="text/javascript">
+	(function(){
+		var corecss = document.createElement('link');
+		var themecss = document.createElement('link');
+		var corecssurl = "https://johnresig.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shCore.css?ver=3.0.9b";
+		if ( corecss.setAttribute ) {
+				corecss.setAttribute( "rel", "stylesheet" );
+				corecss.setAttribute( "type", "text/css" );
+				corecss.setAttribute( "href", corecssurl );
+		} else {
+				corecss.rel = "stylesheet";
+				corecss.href = corecssurl;
+		}
+		document.getElementsByTagName("head")[0].insertBefore( corecss, document.getElementById("syntaxhighlighteranchor") );
+		var themecssurl = "https://johnresig.com/wp-content/plugins/syntaxhighlighter/syntaxhighlighter3/styles/shThemeDefault.css?ver=3.0.9b";
+		if ( themecss.setAttribute ) {
+				themecss.setAttribute( "rel", "stylesheet" );
+				themecss.setAttribute( "type", "text/css" );
+				themecss.setAttribute( "href", themecssurl );
+		} else {
+				themecss.rel = "stylesheet";
+				themecss.href = themecssurl;
+		}
+		//document.getElementById("syntaxhighlighteranchor").appendChild(themecss);
+		document.getElementsByTagName("head")[0].insertBefore( themecss, document.getElementById("syntaxhighlighteranchor") );
+	})();
+	SyntaxHighlighter.config.strings.expandSource = '+ expand source';
+	SyntaxHighlighter.config.strings.help = '?';
+	SyntaxHighlighter.config.strings.alert = 'SyntaxHighlighter\n\n';
+	SyntaxHighlighter.config.strings.noBrush = 'Can\'t find brush for: ';
+	SyntaxHighlighter.config.strings.brushNotHtmlScript = 'Brush wasn\'t configured for html-script option: ';
+	SyntaxHighlighter.defaults['gutter'] = false;
+	SyntaxHighlighter.defaults['light'] = true;
+	SyntaxHighlighter.defaults['pad-line-numbers'] = false;
+	SyntaxHighlighter.defaults['toolbar'] = false;
+	SyntaxHighlighter.all();
+</script>
+<script type="text/javascript" src="./test_files/wp-embed.min.js"></script>
+
+
+
+<!-- Dynamic page generated in 0.104 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2018-11-22 20:28:40 -->
+
+<!-- Compression = gzip --></body></html>
