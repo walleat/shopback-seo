@@ -1,5 +1,5 @@
 {
-  "name": "seo",
+  "name": "shopback-seo",
   "version": "1.0.0",
   "description": "used to scrab html tag",
   "main": "index.js",
@@ -16,6 +16,6 @@
   "keywords": [
     "shopback seo challenge"
   ],
-  "author": "thomas.chuang",
+  "author": "thomas.chuang <walleat@gmail.com>",
   "license": "ISC"
 }
