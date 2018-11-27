@@ -8,7 +8,7 @@
 $ npm install --save shopback-seo
 ```
 
-## Usage
+## Usage sample
 
 ### Input is file path
 ```js
@@ -25,7 +25,7 @@ var rule = [
   }
 ];
 seoValidator.addRules(rule).valid();
-done();
+
 ```
 
 ### Input is writable stream
@@ -44,7 +44,7 @@ var rule = [
   }
 ];
 seoValidator.addRules(rule).valid();
-done();
+
 ```
 
 ### Rules setting
